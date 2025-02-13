@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Surprise</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: pink;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: red;
+        }
+        .start-button, .yes, .no {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        .start-button {
+            background-color: lightblue;
+        }
+        .yes {
+            background-color: lightgreen;
+        }
+        .no {
+            background-color: lightcoral;
+            position: absolute;
+        }
+        #custom-page, #valentine-message, #final-message {
+            display: none;
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 2em;
+            animation: fall 5s infinite linear;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="start-page">
+        <h1>Click here to see your Valentine message 💖</h1>
+        <button class="start-button" onclick="showCustomPage()">Click Here</button>
+    </div>
+    
+    <div id="custom-page">
+        <p id="custom-message">You're my favorite kind of chaos and my sweetest kind of peace. ❤️</p>
+        <button class="start-button" onclick="nextMessage()">Continue</button>
+    </div>
+
+    <div id="valentine-message">
+        <h1>Will you be my Valentine? ❤️(try clicking no)</h1>
+        <div class="buttons">
+            <button class="yes" onclick="showFinalMessage()">Yes</button>
+            <button class="no" onmouseover="moveButton()">No</button>
+        </div>
+    </div>
+    
+    <div id="final-message">
+        <h1>Yayy❤️ , see you today :)</h1>
+    </div>
+    
+    <script>
+        let messages = [
+            "You're my favorite kind of chaos and my sweetest kind of peace. ❤️",
+            "I have loved spending the past 1 month with you!!",
+            "I would choose you over momo and mayo :)",
+            "I Love Your Eyes",
+            "And Nose",
+            "And Lips",
+            "Not The Specs ;)",
+            "Kidding",
+            "Or Maybe Not",
+            "But, I love You❤️",
+            "Kidding?",
+            "DEFINITELY NOT :)"
+        ];
+        let messageIndex = 0;
+
+        function showCustomPage() {
+            document.getElementById('start-page').style.display = 'none';
+            document.getElementById('custom-page').style.display = 'flex';
+        }
+
+        function nextMessage() {
+            messageIndex++;
+            if (messageIndex < messages.length) {
+                document.getElementById('custom-message').innerText = messages[messageIndex];
+            } else {
+                document.getElementById('custom-page').style.display = 'none';
+                document.getElementById('valentine-message').style.display = 'flex';
+            }
+        }
+
+        function moveButton() {
+            let button = document.querySelector('.no');
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 50);
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        }
+
+        function showFinalMessage() {
+            document.getElementById('valentine-message').style.display = 'none';
+            document.getElementById('final-message').style.display = 'flex';
+        }
+
+        function createHearts() {
+            for (let i = 0; i < 30; i++) {
+                let heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                document.body.appendChild(heart);
+                
+                let startX = Math.random() * window.innerWidth;
+                heart.style.left = `${startX}px`;
+                heart.style.top = `-10px`;
+                heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            }
+        }
+
+        createHearts();
+    </script>
+</body>
+</html>
